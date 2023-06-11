@@ -1,43 +1,27 @@
 const express = require('express')
 
-const productManager = require("../classes/ProductManager")
-const cart = new productManager("./products.json")
-const Product = require("../classes/Product.js")
-
 const app = express()
+const PORT = 3000
 
-app.get('/', (req,res) => {
-    if(req.query.limit) {
-        let prod_array = []
-        let i = 1
-        while(i <= parseInt(req.query.limit)) {
-            prod_array.push(cart.getProductById(i))
-            i++
-        }
-        res.json(prod_array)
-    } else {
-        res.json(cart.getProducts())
-    }
-}) 
+const productsRouter = require('../routers/products.router.js')
+const cartRouter = require('../routers/carts.router.js')
 
-app.post('/', () => {
-    //Agrego un prod
-})
+/* MULTER */
+//const filesRouter = require('../routers/files.router.js')
 
-app.put('/:pid', () => {
-    //Update de un producto
-})
+//Middlewares
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-app.delete('/:pid', () => {
-    //Elimina un Producto
-})
+//Routes
+app.use(productsRouter)
+app.use(cartRouter)
 
-app.get('/:pid', (req,res) => {
-    res.json(cart.getProductById(parseInt(req.params.pid)))
-})
+/* MULTER */
+//app.use(filesRouter)
 
-app.listen('3000', () => {
-    console.log("Server running on  port 3000")
+app.listen(PORT, (req,res) => {
+    console.log("Server running on  port ",PORT)
 })
 
 

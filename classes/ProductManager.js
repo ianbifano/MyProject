@@ -1,23 +1,18 @@
 const fs = require("fs");
-const Product = require("./Product.js")
+const path_pkg = require('path')
 
 class ProductManager {
 
     constructor(path) {
-        this.products = [];
-        this.path = path;
+        this.products = []
+        this.path = path_pkg.resolve(__dirname, path);
 
-        // Genero el archivo de persistencia
-        this.readFS()
-            .then((res) => {
-                this.products = res;
-                console.log("Se enlazo la ruta del archivo");
-            })
-            .catch((err) => {
-                console.log("Error al enlazar la ruta especificada.");
-                return false;
-            });
+        this.readFS().then((res) => {
+            this.products = res
+        }).catch((err) => {
+        })
     }
+
 
     //identificador unico de producto (autoincrementable)
     static id = 0;
@@ -32,7 +27,7 @@ class ProductManager {
 
         //Verifico si el codigo del producto ya se encuentra cargado
         let codes = this.products.map((x) => {
-            return x.product.code;
+            return x.code;
         });
 
         if (codes.includes(product.code)) {
@@ -40,9 +35,12 @@ class ProductManager {
                 "El producto con el codigo ingresado ya se encuentra cargado"
             );
         } else {
-            ProductManager.id++;
-            let item = { id: ProductManager.id, ... product };
+            ProductManager.id = this.products.length + 1;
+            let item = { id: ProductManager.id, ...product };
             this.products.push(item);
+
+            console.log("Despues de agregar")
+            console.log(this.products)
 
             //Actualizo el archivo
             this.writeFS(this.products)
@@ -57,8 +55,8 @@ class ProductManager {
 
     //Retorna todos los productos
     getProducts = () => {
-        return this.products;
-    };
+        return this.products
+    }
 
     //Retorna un producto 
     getProductById = (id) => {
@@ -108,11 +106,11 @@ class ProductManager {
         if (product != "404 NOT FOUND") {
             //Controlo que el Object.keys no de error, ya que es critico para la comparacion de la propiedad
             try {
-                let properties = Object.keys(product.product);
+                let properties = Object.keys(product);
                 if (properties.includes(property)) {
                     //Controlo que el valor ingresado se haya asignado correctamente
                     try {
-                        Object.defineProperty(product.product, property, {
+                        Object.defineProperty(product, property, {
                             value: value,
                         });
                         this.writeFS(this.products)
@@ -176,6 +174,7 @@ class ProductManager {
     //retorna el contenido del archivo de productos
     readFS = async () => {
         //Retorna el contenido del archivo en un string
+        console.log(this.path)
         try {
             let res = await fs.promises.readFile(this.path, {
                 encoding: "utf-8",
@@ -187,4 +186,4 @@ class ProductManager {
     };
 }
 
-module.exports = ProductManager
+module.exports = ProductManager 

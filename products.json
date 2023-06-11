@@ -1,57 +1,46 @@
 [
     {
-        "id": 1,
-        "product": {
-            "title": "prod1",
-            "description": "producto 1",
-            "price": 123.5,
-            "thumbnail": "./path",
-            "code": "aaa000",
-            "stock": 10
-        }
-    },
-    {
         "id": 2,
-        "product": {
-            "title": "prod2",
-            "description": "pructo 1",
-            "price": 123.5,
-            "thumbnail": "./path",
-            "code": "aaa002",
-            "stock": 10
-        }
-    },
-    {
-        "id": 3,
-        "product": {
-            "title": "prod1",
-            "description": "proucto 1",
-            "price": 123.5,
-            "thumbnail": "./path",
-            "code": "aaa003",
-            "stock": 10
-        }
+        "title": "Nuevo titulo",
+        "description": "pructo 1",
+        "price": 123.5,
+        "thumbnail": [""],
+        "code": "aaa002",
+        "stock": 10,
+        "status": true,
+        "category": ""
     },
     {
         "id": 4,
-        "product": {
-            "title": "prod2",
-            "description": "proto 1",
-            "price": 123.5,
-            "thumbnail": "./path",
-            "code": "bbb002",
-            "stock": 10
-        }
+        "title": "prod2",
+        "description": "proto 1",
+        "price": 123.5,
+        "thumbnail": [""],
+        "code": "bbb002",
+        "stock": 10,
+        "status": true,
+        "category": ""
     },
     {
         "id": 5,
-        "product": {
-            "title": "prod1",
-            "description": "prod1",
-            "price": 123.5,
-            "thumbnail": "./path",
-            "code": "aaa001",
-            "stock": 10
-        }
+        "title": "prod1",
+        "description": "prod1",
+        "price": 123.5,
+        "thumbnail": [""],
+        "code": "aaa001",
+        "stock": 10,
+        "status": true,
+        "category": ""
+    },
+    {
+        "id": 6,
+        "title": "un titulo",
+        "description": "a description",
+        "price": 0,
+        "thumbnail": [""],
+        "code": "askjff",
+        "status": true,
+        "stock": 10,
+        "category": "shoes"
     }
 ]
