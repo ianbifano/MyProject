@@ -33,8 +33,9 @@ router.post('/api/carts', (req, res) => {
 //Agrega un producto a un carrito
 router.post('/api/carts/:cid/product/:pid', (req, res) => {
     if (!req.query.quantity) {
-        req.query.quantity = 1
-    }
+        req.query.quantity = "1"
+    } 
+
     crManager.addProductToCart(req.params.cid, req.params.pid, req.query.quantity)
     res.send("OK")
 })

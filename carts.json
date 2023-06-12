@@ -12,6 +12,21 @@
     {
         "id": 2,
         "name": "Sencod Cart",
-        "products": []
+        "products": [
+            {
+                "product": 2,
+                "quantity": 1
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Mati Cart",
+        "products": [
+            {
+                "product": 2,
+                "quantity": 1
+            }
+        ]
     }
 ]

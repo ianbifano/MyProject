@@ -61,9 +61,10 @@ class CartManager {
             return x.product
         })
 
-
         if (arrIds.includes(parseInt(productId))) {
-            cart.products[parseInt(productId) - 1].quantity = parseInt(quantity)
+            let product = cart.products.find((x) => x.product == parseInt(productId))
+
+            product.quantity = parseInt(quantity)
         } else {
             cart.products.push({ product: parseInt(productId), quantity: parseInt(quantity) })
         }
@@ -76,8 +77,6 @@ class CartManager {
             .catch((err) => {
                 console.log("Error al agregar el cart");
             });
-
-
     }
 
     /* 
