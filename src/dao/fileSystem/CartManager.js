@@ -4,7 +4,7 @@ const path_pkg = require('path')
 class CartManager {
     constructor(path) {
         this.carts = []
-        this.path = path_pkg.resolve(__dirname, path);
+        this.path = path_pkg.resolve(__dirname, "../"+path);
 
         this.readFS().then((res) => {
             this.carts = res

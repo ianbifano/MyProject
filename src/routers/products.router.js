@@ -1,49 +1,57 @@
 const { Router } = require('express')
 const router = Router()
 
-const productManager = require("../classes/ProductManager.js")
-const Product = require("../classes/Product.js")
+const productManager = require("../dao/fileSystem/ProductManager")
+const Product = require("../dao/fileSystem/Product.js")
+const productModel = require('../dao/models/products.model.js')
 const prManager = new productManager("../products.json")
 
 
 //Retorna todos los productos
 router.get('/products', (req, res) => {
     if (req.query.limit) {
-        res.render('home', {
-            products: prManager.products.slice(0, parseInt(req.query.limit)),
-            style: "style.css"
+        productModel.find().then((products) => {
+            res.render('home', {
+                products: products.slice(0, parseInt(req.query.limit)),
+                style: "style.css"
+            })
+        }).catch((err) => {
+            console.log(err)
         })
     } else {
-        res.render('home', {
-            products: prManager.getProducts(),
-            style: "style.css"
-        })
+        productModel.find()
+            .then((products) => {
+                res.render('home', {
+                    products: products,
+                    style: "style.css"
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 })
 
-router.get('/realTimeProducts', (req, res) => {
-    res.render('realTimeProducts', {
-        style: "style.css"
-    })
-})
-
-/* router.get('/api/products', (req, res) => {
-    if (req.query.limit) {
-        res.json(prManager.products.slice(0, parseInt(req.query.limit)))
-    } else {
-        res.json(prManager.getProducts())
-    }
-}) */
 
 //Retorna un producto
 router.get('/api/products/:pid', (req, res) => {
-    res.json(prManager.getProductById(parseInt(req.params.pid)))
+    productModel.findOne({ id: req.params.pid })
+        .then((product) => {
+            res.send(product)
+        })
+        .catch((err) => {
+            res.send(err)
+        })
 })
 
 //Agrega un producto
 router.post('/api/products', (req, res) => {
     let newProduct = new Product(req.body.title, req.body.description, req.body.price, req.body.thumbnail, req.body.code, req.body.status, req.body.stock, req.body.category)
     prManager.addProduct(newProduct)
+
+    let newproductWithId = prManager.getProductByCode(newProduct.code)
+
+    productModel.create(newproductWithId)
 })
 
 //Modifica un producto
@@ -62,12 +70,46 @@ router.put('/api/products/:pid', (req, res) => {
 //Elimina un producto
 router.delete('/api/products/:pid', (req, res) => {
     prManager.deleteProductById(req.params.pid)
+    productModel.delete({id:parseInt(req.params.pid)})
 })
 
 //WEBSOCKETS
 
-router.get('/api/realtimeproducts', (req, res) => {
-
+router.get('/realTimeProducts', (req, res) => {
+    res.render('realTimeProducts', {
+        style: "style.css"
+    })
 })
 
 module.exports = router;
+
+//
+//
+//METODOS CON FILE SYSTEM
+
+/* //Retorna todos los productos --
+router.get('/products', (req, res) => {
+    console.log(Product.find())
+    if (req.query.limit) {
+        res.render('home', {
+            products: prManager.products.slice(0, parseInt(req.query.limit)),
+            style: "style.css"
+        })
+    } else {
+        res.render('home', {
+            products: prManager.getProducts(),
+            style: "style.css"
+        })
+    }
+}) 
+router.get('/api/products', (req, res) => {
+    if (req.query.limit) {
+        res.json(prManager.products.slice(0, parseInt(req.query.limit)))
+    } else {
+        res.json(prManager.getProducts())
+    }
+})
+
+
+
+*/

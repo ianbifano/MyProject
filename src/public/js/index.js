@@ -1,32 +1,36 @@
 const socket = io()
 
+socket.emit("prod-activate", "")
+
 socket.emit("req-products", "pido prods")
 
-socket.on("clear-np-screen",(data) => {
+socket.on("clear-np-screen", (data) => {
 
     let title = document.getElementById("title")
     title.innerText = "My Products"
 
     let div_button = document.getElementById("div-button")
-    div_button.setAttribute("class","mt-5")
+    div_button.setAttribute("class", "mt-5")
 
     let btn = document.createElement("button")
-    btn.setAttribute("class","btn btn-primary")
+    btn.setAttribute("class", "btn btn-primary")
     btn.innerText = "New Product"
-    btn.onclick = createProduct()
-
+    btn.onclick = () => {
+        createProduct()
+    }
     div_button.appendChild(btn)
 
     let div_products = document.getElementById("div-products")
     div_products.innerHTML = ""
 
     let ul = document.createElement("ul")
-    ul.setAttribute("id","ul-products")
+    ul.setAttribute("id", "ul-products")
 
     div_products.appendChild(ul)
 })
 
 socket.on("res-products", (data) => {
+    console.log(data)
     data = data.products
     render(data)
 })
@@ -217,8 +221,8 @@ function createProduct() {
         let category
         category = form.children[11].value
 
-        const new_product = {title: title, description: description, price: price, thumbnail: "",code: code, status: true, stock: stock, category: category}
+        const new_product = { title: title, description: description, price: price, thumbnail: "", code: code, status: true, stock: stock, category: category }
 
-        socket.emit("add-product",new_product)
+        socket.emit("add-product", new_product)
     })
 }
