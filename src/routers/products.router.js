@@ -8,28 +8,43 @@ const prManager = new productManager("../products.json")
 
 
 //Retorna todos los productos
-router.get('/products', (req, res) => {
-    if (req.query.limit) {
-        productModel.find().then((products) => {
-            res.render('home', {
-                products: products.slice(0, parseInt(req.query.limit)),
-                style: "style.css"
-            })
-        }).catch((err) => {
-            console.log(err)
-        })
-    } else {
-        productModel.find()
-            .then((products) => {
-                res.render('home', {
-                    products: products,
-                    style: "style.css"
-                })
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+router.get('/products', async (req, res) => {
+
+    res.cookie("Cookie",'Informacion de la Cookie', {signed:true})
+
+    let products = []
+
+    if (!req.query.limit) {
+        req.query.limit = "2"
     }
+
+    if (!req.query.page) {
+        req.query.page = "1"
+    }
+
+    if (req.query.sort) {
+        if (req.query.sort == "asc") {
+            req.query.sort = "1"
+        } else if (req.query.sort == "desc") {
+            req.query.sort = "-1"
+        }
+    } else {
+        req.query.sort = "-1"
+    }
+
+    if (req.query.category) {
+        products = await productModel.paginate({ category: req.query.category }, { limit: parseInt(req.query.limit), page: parseInt(req.query.page), sort: { price: parseInt(req.query.sort) } })
+    } else {
+        products = await productModel.paginate({}, { limit: parseInt(req.query.limit), page: parseInt(req.query.page), sort: { price: parseInt(req.query.sort) } })
+    }
+
+    console.log(products.docs)
+
+    res.render('home', {
+        products: products.docs,
+        style: "style.css"
+    })
+
 })
 
 
@@ -70,7 +85,7 @@ router.put('/api/products/:pid', (req, res) => {
 //Elimina un producto
 router.delete('/api/products/:pid', (req, res) => {
     prManager.deleteProductById(req.params.pid)
-    productModel.delete({id:parseInt(req.params.pid)})
+    productModel.delete({ id: parseInt(req.params.pid) })
 })
 
 //WEBSOCKETS

@@ -52,6 +52,10 @@ class CartManager {
         return this.carts.find((x) => x.id == id)
     }
 
+    getCartByName(name) {
+        return this.carts.find((x) => x.name == name)
+    }
+
     //Agrega un product id a un carrito
     addProductToCart(cartId, productId, quantity) {
         let cart = this.getCartById(cartId)

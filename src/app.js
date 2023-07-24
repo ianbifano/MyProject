@@ -4,11 +4,13 @@ const http = require('http')
 const { Server } = require('socket.io')
 const path = require('path')
 const db = require('./db.js')
+const cookieParser = require('cookie-parser')
 
 const productsRouter = require('./routers/products.router.js')
 const cartRouter = require('./routers/carts.router.js')
 const homeRouter = require('./routers/home.router.js')
 const chatRouter = require('./routers/chat.router.js')
+const loginRouter = require('./routers/login.router.js')
 
 //esto no va aca
 const { Router } = require('express')
@@ -38,6 +40,7 @@ app.set('view engine', 'handlebars')
 //const filesRouter = require('../routers/files.router.js')
 
 //Middlewares
+app.use(cookieParser('coderSecret'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
@@ -46,6 +49,7 @@ app.use(productsRouter)
 app.use(cartRouter)
 app.use(homeRouter)
 app.use(chatRouter)
+app.use(loginRouter)
 
 /* MULTER */
 //app.use(filesRouter)
