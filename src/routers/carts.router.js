@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const router = Router()
+const path = require("path")
 
 const CartManager = require('../dao/fileSystem/CartManager')
 
@@ -8,8 +9,16 @@ const crManager = new CartManager("../carts.json")
 const cartModel = require("../dao/models/carts.model")
 const productModel = require("../dao/models/products.model")
 
+function auth(req,res,next){
+    if(req.session?.email == "iaanbifano@gmail.com" && req.session?.password == "passcoder") {
+        return next()
+    }
+    res.send("Usuario No autenticado")
+
+}
+
 //Retorna todos los cart
-router.get('/api/carts', (req, res) => {
+router.get('/api/carts',auth, (req, res) => {
     cartModel.find().then((products) => {
         res.json(products)
     }).catch((err) => {

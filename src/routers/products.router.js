@@ -40,8 +40,8 @@ router.get('/products', async (req, res) => {
 
     console.log(products.docs)
 
-    res.render('home', {
-        products: products.docs,
+    res.render('products', {
+        products: [{title: "prod1"},{title:"prod2"}],
         style: "style.css"
     })
 

@@ -1,20 +1,23 @@
+//Dependencies
 const express = require('express')
 const handlebars = require('express-handlebars')
 const http = require('http')
 const { Server } = require('socket.io')
 const path = require('path')
-const db = require('./db.js')
 const cookieParser = require('cookie-parser')
+const session = require("express-session")
+const FileStore = require("session-file-store")(session)
+const MongoStore = require("connect-mongo")
 
+//DB config
+const db = require('./db.js')
+
+//Routers
 const productsRouter = require('./routers/products.router.js')
 const cartRouter = require('./routers/carts.router.js')
 const homeRouter = require('./routers/home.router.js')
 const chatRouter = require('./routers/chat.router.js')
-const loginRouter = require('./routers/login.router.js')
-
-//esto no va aca
-const { Router } = require('express')
-const router = Router()
+const loginRouter = require('./routers/auth.router.js')
 
 // Express and port
 const app = express()
@@ -25,6 +28,7 @@ const server = http.createServer(app)
 
 //Socket
 const io = new Server(server)
+
 
 
 //public
@@ -40,7 +44,20 @@ app.set('view engine', 'handlebars')
 //const filesRouter = require('../routers/files.router.js')
 
 //Middlewares
+
+//Cookies
 app.use(cookieParser('coderSecret'))
+
+//Session
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: "mongodb+srv://ianbifano:ecommercepass@ecommerce-cluster.bzmyj9n.mongodb.net/ecommerce"
+    }),
+    secret: "secretCoder",
+    resave: true,
+    saveUninitialized: true
+}))
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
