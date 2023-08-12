@@ -14,7 +14,6 @@ function auth(req,res,next){
         return next()
     }
     res.send("Usuario No autenticado")
-
 }
 
 //Retorna todos los cart

@@ -8,6 +8,8 @@ const cookieParser = require('cookie-parser')
 const session = require("express-session")
 const FileStore = require("session-file-store")(session)
 const MongoStore = require("connect-mongo")
+const passport = require("passport")
+const { initializePassport } = require("./config/passport/passport")
 
 //DB config
 const db = require('./db.js')
@@ -21,7 +23,7 @@ const loginRouter = require('./routers/auth.router.js')
 
 // Express and port
 const app = express()
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3000
 
 //Http Server 
 const server = http.createServer(app)
@@ -60,6 +62,11 @@ app.use(session({
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+//Passport
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 //Routes
 app.use(productsRouter)
