@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 
 const { createHash, isValidPassword } = require("../utils/bcrypt")
 
-const userModel = require('../dao/models/user.model.js')
+const userModel = require('../dao/models/users.model.js')
 
 function authAdmin(req, res, next) {
 
