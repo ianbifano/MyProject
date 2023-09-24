@@ -1,4 +1,4 @@
-const cartModel = require('../dao/models/carts.model')
+const cartModel = require('../models/carts.schema')
 
 const { getProductDBIdService } = require('./products.service')
 

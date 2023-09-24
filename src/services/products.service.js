@@ -1,6 +1,6 @@
 
-const productModel = require('../dao/models/products.model')
-const Product = require("../dao/fileSystem/Product.js")
+const productModel = require('../models/products.schema')
+const Product = require("../models/dao/memory/Product.js")
 
 const getProductDBIdService = async (id) => {
     let data = await productModel.find({ id: id })

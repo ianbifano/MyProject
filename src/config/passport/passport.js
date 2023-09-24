@@ -6,7 +6,7 @@ const passport = require("passport")
 const JwtStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
 
-const userModel = require("../../dao/models/users.model")
+const userModel = require("../../models/schema/users.schema")
 const { createHash, isValidPassword } = require("../../utils/bcrypt")
 
 const initializePassport = () => {

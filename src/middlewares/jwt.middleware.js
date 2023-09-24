@@ -12,6 +12,7 @@ const isAuthorized = (req, res, next) => {
         if (err) {
             return res.send("invalid token")
         }
+        console.log("authorized")
         next()
     })
 }
