@@ -19,6 +19,10 @@ class ProductRepository {
         const productPayload = new SaveProductDTO(payload)
         return await this.dao.save(productPayload)
     }
+
+    updateById = async (productId, product) => {
+        return await this.dao.updateById(productId, product)
+    }
 }
 
 module.exports = ProductRepository

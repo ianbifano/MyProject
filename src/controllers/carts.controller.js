@@ -71,10 +71,10 @@ class CartController {
     }
 
     static confirmPurchase = async (req, res, next) => {
-        console.log("confirm purchase")
         try {
-            let ticket = await cartRepository.confirmPurchase(req.params.cid)
-            res.send(ticket)
+            let cart = await cartRepository.confirmPurchase(req.params.cid)
+            const response = successResponse(cart)
+            res.status(200).json(response)
         } catch (err) {
             next(err)
         }

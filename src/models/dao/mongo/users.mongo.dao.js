@@ -25,11 +25,10 @@ class UsersMongoDao {
 
     getCart = async (userId) => {
         let user = await userModel.findOne({_id: userId}).lean()
-
         return user.carts
     }
 
-    addCart = async (userId, cartId) => {
+    setCart = async (userId, cartId) => {
         let user = await this.getUserById(userId)
 
         user.carts.push({cart: cartId})

@@ -40,6 +40,7 @@ router.post('/login', async (req, res) => {
             let token = jwt.sign(JSON.stringify(user), 'mysecretcoderjwt')
 
             console.log("bearer " + token)
+
             res.cookie('jwtCookie', token, {
                 maxAge: 60*60*100,
                 httpOnly: true

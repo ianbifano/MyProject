@@ -8,6 +8,8 @@ const session = require("express-session")
 const MongoStore = require("connect-mongo")
 const cookieParser = require('cookie-parser')
 
+const errMiddleware = require("./middlewares/errors.middleware")
+
 const { PORT } = CONFIG
 
 const app = express()
@@ -41,7 +43,7 @@ app.set('views', path.resolve(__dirname, "../src/views"))
 app.set('view engine', 'handlebars')
 
 
-app.use('/api', appRouter )
+app.use('/api',errMiddleware, appRouter )
 
 app.listen(PORT,() => {
     console.log("Server UP  on port: " , PORT)

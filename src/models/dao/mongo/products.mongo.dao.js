@@ -22,6 +22,10 @@ class ProductsMongoDao {
         const newProduct = await productModel.create(payload)
         return newProduct
     }
+
+    updateById = async (productId, product) => {
+        return await productModel.updateOne({_id: productId}, product)
+    }
 }
 
 module.exports = ProductsMongoDao

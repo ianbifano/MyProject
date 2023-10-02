@@ -38,22 +38,29 @@ class UserController {
     }
 
     static getCart = async (req, res, next) => {
-        try {
-            const cart = await userRepository.getCart(req.params.uid)
 
+        if (req.session.user._id != req.params.uid) {
+            res.send({ err: "No permission" })
+        } else {
             try {
-                res.redirect("/api/carts/" + cart[0].cart.toString())
+
+                const cart = await userRepository.getCart(req.params.uid)
+
+                try {
+                    res.redirect("/api/carts/" + cart[0].cart.toString())
+                } catch (err) {
+                    res.redirect("/api/carts/newCartToUser/" + req.params.uid)
+                }
             } catch (err) {
-                res.redirect("/api/carts/newCartToUser/" + req.params.uid)
+                next(err)
             }
-        } catch (err) {
-            next(err)
         }
     }
 
-    static addCart = async (req, res, next) => {
+    
+    static setCart = async (req, res, next) => {
         try {
-            const user = await userRepository.addCart(req.params.uid, req.params.cid)
+            const user = await userRepository.setCart(req.params.uid, req.params.cid)
             res.redirect("/api/users/" + user._id.toString() + "/cart")
         } catch (err) {
             next(err)

@@ -37,9 +37,8 @@ class CartsMongoDao {
         return cart
     }
 
-    confirmPurchase = async (cartId) => {
-        let cart = await this.getCartById(cartId)
-        console.log(cart)
+    updateById = async (cartId, newCart) => {
+        return await cartModel.updateOne({_id: cartId}, newCart)
     }
 }
 

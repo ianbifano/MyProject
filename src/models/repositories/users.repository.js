@@ -24,8 +24,8 @@ class UserRepository {
         return await this.dao.getCart(userId)
     }
 
-    addCart= async (userId, cartId) => {
-        return await this.dao.addCart(userId, cartId)
+    addCart = async (userId, cartId) => {
+        return await this.dao.setCart(userId, cartId)
     }
 }
 

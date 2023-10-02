@@ -10,7 +10,4 @@ router.get('/', isAuthorized , authorization("user"), (req, res) => {
     res.render('home', { data: req.session })
 })
 
-
-
-
 module.exports = router
