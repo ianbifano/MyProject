@@ -10,6 +10,7 @@ class TicketController {
             const response = successResponse(tickets)
             res.status(200).json(response)
         } catch (err) {
+            req.logger.error(err)
             next(err)
         }
     }
@@ -21,6 +22,7 @@ class TicketController {
             const response = successResponse(newTicket)
             res.status(200).json(response)
         } catch (err) {
+            req.logger.error(err)
             next(err)
         }
     }
