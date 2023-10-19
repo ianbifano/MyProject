@@ -1,4 +1,4 @@
-const productModel  = require('../../schema/products.schema')
+const productModel = require('../../schema/products.schema')
 const MongoManager = require("../../db/manager/mongo.manager")
 
 class ProductsMongoDao {
@@ -14,8 +14,8 @@ class ProductsMongoDao {
         }
     }
 
-    getProductById = async (id) => {
-        return await productModel.findOne({ _id: id}).lean()
+    getById = async (id) => {
+        return await productModel.findOne({ _id: id }).lean()
     }
 
     save = async (payload) => {
@@ -24,7 +24,11 @@ class ProductsMongoDao {
     }
 
     updateById = async (productId, product) => {
-        return await productModel.updateOne({_id: productId}, product)
+        return await productModel.updateOne({ _id: productId }, product)
+    }
+
+    deleteById = async (productId) => {
+        return await productModel.deleteOne({ _id: productId })
     }
 }
 
