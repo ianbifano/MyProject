@@ -72,8 +72,6 @@ if (cluster.isPrimary) {
         apis: [`${__dirname}/docs/**/*.yaml`]
     }
 
-    console.log(__dirname)
-
     const specs = swaggerJSDoc(swaggerOptions)
 
     app.use('/apidocs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
