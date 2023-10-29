@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 
 
 const isAuthorized = (req, res, next) => {
+
     if (!req.headers.authorization) {
         return res.send('invalid token')
     }
@@ -16,5 +17,6 @@ const isAuthorized = (req, res, next) => {
         next()
     })
 }
+
 
 module.exports = { isAuthorized } 

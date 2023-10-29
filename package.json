@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/server.js",
-    "test": "mocha test/chai/dao/users.test.js"
+    "test": "mocha test/supertest/supertest.test.js"
   },
   "keywords": [],
   "author": "",
@@ -14,7 +14,6 @@
     "assert": "^2.1.0",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
-    "chai": "^4.3.10",
     "commander": "^11.0.0",
     "connect-mongo": "^5.0.0",
     "cookie-parser": "^1.4.6",
@@ -25,7 +24,6 @@
     "express-handlebars": "^7.0.7",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.1",
-    "mocha": "^10.2.0",
     "mongoose": "^7.3.2",
     "mongoose-paginate-v2": "^1.7.23",
     "multer": "^1.4.5-lts.1",
@@ -42,6 +40,9 @@
     "winston": "^3.10.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.1.0"
+    "@faker-js/faker": "^8.1.0",
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }
