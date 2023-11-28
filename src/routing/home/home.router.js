@@ -3,10 +3,11 @@ const router = Router()
 
 const passport = require("passport")
 
-const { passportCall, authorization } = require("../../utils/passport")
+const { passportCall } = require("../../utils/passport")
 const { isAuthorized } = require("../../middlewares/jwt.middleware")
+const { applyPolicy } = require("../../middlewares/auth.middleware")
 
-router.get('/', isAuthorized , authorization("user"), (req, res) => {
+router.get('/', applyPolicy(["user","admin"]), (req, res) => {
     res.render('home', { data: req.session })
 })
 

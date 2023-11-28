@@ -1,12 +1,10 @@
 const { Router } = require('express')
 const router = Router()
 
-
-
 const { isAuthorized } = require("../../middlewares/jwt.middleware")
 
 
-router.get('/chat', isAuthorized, (req, res) => {
+router.get('/', (req, res) => {
     res.render('chat', { style: "style.css" })
 })
 

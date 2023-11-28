@@ -8,14 +8,6 @@ const { createHash, isValidPassword } = require("../../utils/bcrypt")
 
 const AuthController = require("../../controllers/auth.controller")
 
-function authAdmin(req, res, next) {
-
-    if (req.session.rol == "admin") {
-        return next()
-    }
-    res.send("Denied access")
-}
-
 router.get('/login', (req,res) => {
     res.render("login", {})
 })

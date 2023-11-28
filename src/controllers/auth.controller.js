@@ -32,7 +32,7 @@ class AuthController {
                 maxAge: 60 * 60 * 100,
                 httpOnly: true
             })
-            res.redirect('/api/home')
+            res.redirect('/home')
         } else {
             res.send("Incorrect password")
         }

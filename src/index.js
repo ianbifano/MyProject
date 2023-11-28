@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 
 const CONFIG = require("./config/config")
 const { initializePassport } = require("./config/passport/passport")
-const addLogger = require("./utils/logger")
+const { addLogger } = require("./middlewares/logger.middleware")
 const errMiddleware = require("./middlewares/errors.middleware")
 
 
@@ -53,8 +53,10 @@ if (cluster.isPrimary) {
     app.set('view engine', 'handlebars')
 
     app.use(addLogger)
-    app.use('/api', errMiddleware, appRouter)
+    app.use('/', errMiddleware, appRouter)
 
+
+    //DOCUMENTACION
     const swaggerOptions = {
         definition: {
             openapi: '3.0.1',
@@ -75,10 +77,6 @@ if (cluster.isPrimary) {
     const specs = swaggerJSDoc(swaggerOptions)
 
     app.use('/apidocs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
-
-
-
-
 
     app.listen(CONFIG.PORT, () => {
         console.log("Server UP  on port: ", CONFIG.PORT)

@@ -18,7 +18,7 @@ const CONFIG = {
     },
     PORT: process.env.PORT || 8080,
     DATASOURCE: process.env.DATASOURCE || '',
-    ENVIRONMENT: process.env.ENVIRONMENT || ''
+    ENVIRONMENT: process.env.ENVIRONMENT || 'prod'
 }
 
 module.exports = CONFIG 

@@ -1,11 +1,23 @@
 const applyPolicy = (roles) => {
     return (req, res, next) => {
-        if(roles[0].toUpperCase == "PUBLIC") return next()
+        console.log(req.session.rol)
+        if (!roles.includes(req.session.rol)) {
+            return res.status(401).send({ status: "error", error: "Not authenticated" })
+        } else {
+            next()
+        }
+    }
+}
 
-        if(!req.user) return res.status(401).send({status: "error", error: "No autenticado"})
+const isLogged = (req, res, next) => {
+    if (req.user) {
+        next()
+    } else {
+        res.send("Not authorized")
     }
 }
 
 module.exports = {
-    applyPolicy
+    applyPolicy,
+    isLogged
 }
